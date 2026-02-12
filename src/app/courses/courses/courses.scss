@@ -1,3 +1,32 @@
 table {
   width: 100%;
 }
+
+.loading-spinner{
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.8) ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:host {
+  display: block;
+  padding: 16px;
+}
+
+mat-card {
+  overflow: hidden;
+  padding: 0;
+  border-radius: 4px;
+}
+
+mat-toolbar {
+  margin: 0;
+  padding: 0 16px;
+  height: 64px;
+}
+
+.table-wrapper {
+  padding: 16px;
+}
