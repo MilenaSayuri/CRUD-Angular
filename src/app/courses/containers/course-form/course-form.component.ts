@@ -1,7 +1,7 @@
-import { AppMaterialModule } from '../../shared/components/app-material/app-material-module';
+import { AppMaterialModule } from '../../../shared/components/app-material/app-material-module';
 import { Component } from '@angular/core';
-import { CoursesService } from '../services/courses.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CoursesService } from '../../services/courses.service';
+import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -17,16 +17,15 @@ export class CourseFormComponent {
   form: FormGroup;
 
   constructor(
-    private readonly formBuilder: FormBuilder,
+    private readonly formBuilder: NonNullableFormBuilder,
     private readonly service: CoursesService,
     private readonly snackBar: MatSnackBar,
     private readonly location: Location
   ) {
     this.form = this.formBuilder.group({
-      name: [null],
-      category: [null],
+      name: [''],
+      category: ['']
     });
-
   }
 
   onSubmit() {
