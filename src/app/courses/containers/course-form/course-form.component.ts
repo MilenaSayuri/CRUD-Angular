@@ -1,9 +1,11 @@
 import { AppMaterialModule } from '../../../shared/components/app-material/app-material-module';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CoursesService } from '../../services/courses.service';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+import { Course } from '../../model/course';
 
 @Component({
   selector: 'app-course-form',
@@ -12,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [ReactiveFormsModule, AppMaterialModule]
 })
-export class CourseFormComponent {
+export class CourseFormComponent implements OnInit {
 
   form: FormGroup;
 
@@ -20,11 +22,22 @@ export class CourseFormComponent {
     private readonly formBuilder: NonNullableFormBuilder,
     private readonly service: CoursesService,
     private readonly snackBar: MatSnackBar,
-    private readonly location: Location
+    private readonly location: Location,
+    private readonly route: ActivatedRoute
   ) {
     this.form = this.formBuilder.group({
+      _id: [''],
       name: [''],
       category: ['']
+    });
+  }
+
+  ngOnInit(): void {
+    const course: Course = this.route.snapshot.data['course'];
+    this.form.setValue({
+      _id: course._id,
+      name: course.name,
+      category: course.category
     });
   }
 
@@ -32,7 +45,6 @@ export class CourseFormComponent {
     this.service.save(this.form.value).subscribe({
       next: (result) => this.onSuccess(), error: (error) => this.onError()
     });
-
   }
 
   private onError() {

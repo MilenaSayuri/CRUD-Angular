@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Course } from '../../model/course';
 import { CoursesService } from '../../services/courses.service';
 import { catchError, Observable, of } from 'rxjs';
@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './courses.html',
   styleUrl: './courses.scss',
 })
-export class Courses implements OnInit {
+export class Courses {
 
   courses$: Observable<Course[]>;
 
@@ -38,9 +38,11 @@ export class Courses implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
-
   onAdd() {
     this.router.navigate(['new'], { relativeTo: this.route });
+  }
+
+  onEdit(course: Course) {
+    this.router.navigate(['edit', course._id], { relativeTo: this.route });
   }
 }
